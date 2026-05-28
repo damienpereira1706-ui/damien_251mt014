@@ -1,0 +1,20 @@
+module comparator1bit(
+    input a , input  b, input gin ,input lin , input ein , output gout , output lout , output eout 
+);
+wire currenteq;
+assign currenteq=~(a^b);
+assign eout=ein&currenteq;
+assign gout=(a&~b)|(currenteq&gin);
+assign lout=(~a&b)|(currenteq&lin);
+endmodule
+module bit4comparator(
+    input [3:0] a , input [3:0] b, input gin ,input lin , input ein , output gout , output lout , output eout
+);
+ wire gout0 , lout0 , eout0;
+ wire gout1 , lout1 , eout1;
+ wire gout2 , lout2 , eout2;
+ comparator1bit bit0(a[0] , b[0] , gin , lin , ein , gout0 , lout0 , eout0);
+ comparator1bit bit1(a[1] , b[1] , gout0 , lout0 , eout0 , gout1, lout1 , eout1);
+ comparator1bit bit2(a[2] , b[2] , gout1 , lout1 , eout1 , gout2, lout2 , eout2);
+ comparator1bit bit3(a[3] , b[3] , gout2 , lout2 , eout2 , gout, lout , eout);
+endmodule

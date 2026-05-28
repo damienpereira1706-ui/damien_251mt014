@@ -1,0 +1,64 @@
+module tb_comparator_4bit;
+
+    reg [3:0] A;
+    reg [3:0] B;
+
+    wire Gout;
+    wire Lout;
+    wire Eout;
+
+    // Instantiate DUT
+    // DUT = Device Under Test
+
+    bit4comparator uut(
+        .a(A),
+        .b(B),
+        .gin(1'b0), // Initial carry-in for the least significant bit
+        .lin(1'b0), // Initial less-than input for the least significant bit
+        .ein(1'b1), // Initial equal input for the least significant bit
+        .gout(Gout),
+        .lout(Lout),
+        .eout(Eout)
+    );
+
+    initial begin
+
+        $display(" A      B      G  L  E ");
+
+        // Test 1
+        A = 4'b1010;
+        B = 4'b1001;
+        #10;
+
+        // Test 2
+        A = 4'b0011;
+        B = 4'b0111;
+        #10;
+
+        // Test 3
+        A = 4'b1100;
+        B = 4'b1100;
+        #10;
+
+        // Test 4
+        A = 4'b1111;
+        B = 4'b0001;
+        #10;
+
+        // Test 5
+        A = 4'b0000;
+        B = 4'b1111;
+        #10;
+
+        $finish;
+
+    end
+
+    initial begin
+
+        $monitor("%b    %b     %b  %b  %b",
+                 A, B, Gout, Lout, Eout);
+
+    end
+
+endmodule
