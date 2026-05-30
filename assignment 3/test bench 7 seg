@@ -1,0 +1,42 @@
+`timescale 1ns / 1ps
+
+module seg7testbench;
+
+    reg [2:0] A;
+    wire out_a, out_b, out_c, out_d, out_e, out_f, out_g;
+
+    // Instantiate DUT
+    seg7 uut(
+        .num(A),
+        .a(out_a),
+        .b(out_b),
+        .c(out_c),
+        .d(out_d),
+        .e(out_e),
+        .f(out_f),
+        .g(out_g)
+    );
+
+    initial begin
+        $dumpfile("waveform.vcd");
+        $dumpvars(0, seg7testbench);
+    end
+
+    initial begin
+        $display("Time\t Dec \t num (Gray) \t a b c d e f g");
+        $monitor("%0t\t -- \t   %b    \t %b %b %b %b %b %b %b", $time, A, out_a, out_b, out_c, out_d, out_e, out_f, out_g);
+
+       
+        A = 3'b000; #10; // Dec 0
+        A = 3'b001; #10; // Dec 1
+        A = 3'b010; #10; // Dec 2
+        A = 3'b011; #10; // Dec 3
+        A = 3'b100; #10; // Dec 4
+        A = 3'b101; #10; // Dec 5
+        A = 3'b110; #10; // Dec 6
+        A = 3'b111; #10; // Dec 7
+
+        $finish;
+    end
+
+endmodule

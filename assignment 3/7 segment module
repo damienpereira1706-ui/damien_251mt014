@@ -1,0 +1,16 @@
+module seg7(
+    input wire [2:0] num, // 3-bit input (covers 0 to 7)
+    output wire a, output wire b, output wire c, 
+    output wire d, output wire e, output wire f, output wire g
+);
+
+    // Removed num[3] references completely since input is 3-bit
+    assign a = num[1] | (num[0] & num[2]) | (~num[0] & ~num[2]);
+    assign b = (~num[2] )| (~num[1]&~num[0])| (num[1] & num[0]) ;
+    assign c = (num[2])|( ~num[1]) | (num[0]);
+    assign d = (num[1] & ~num[0]) | (~num[0] & ~num[2]) | (~num[1] & num[0] & num[2]) | (num[1] & ~num[2]);
+    assign e = (num[1] & ~num[0]) | (~num[0] & ~num[2]);
+    assign f = (~num[1] & ~num[0]) | (num[2] & ~num[1]) | (~num[0] & num[2]);
+    assign g = (num[2] & ~num[1]) | (num[1] & ~num[2]) | (num[1] & ~num[0]);
+
+endmodule
